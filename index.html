@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Pinturas BS Spa — Pinturería en Concepción. Sherwin Williams, Soquina, Ceresita, Renner Sayerlack, Hela, Nexxo y Passol. Av. Los Carrera 1170 A. Atención lunes a sábado." />
+<meta name="theme-color" content="#14141b" />
+<meta property="og:title" content="Pinturas BS Spa — Pinturería en Concepción" />
+<meta property="og:description" content="Stock completo de pinturas, barnices, impermeabilizantes y herramientas en Concepción. Av. Los Carrera 1170 A." />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="es_CL" />
+<title>Pinturas BS Spa — Pinturería en Concepción</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap');
+
+:root{
+  --ink:#14141b;
+  --bg:#ffffff;
+  --surface:#f4f3ef;
+  --accent:#f5a623;
+  --accent-deep:#d18810;
+  --rule:#1a1a2e;
+  --muted:#6b6b73;
+  --nav-h:72px;
+  --max:1240px;
+  --gut:clamp(20px, 4vw, 56px);
+  --radius:0;
+  --display:'Oswald','Barlow Condensed',Impact,sans-serif;
+  --body:'Inter','Helvetica Neue',Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important}
+}
+
+body{
+  font-family:var(--body);
+  color:var(--ink);
+  background:var(--bg);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
+
+::selection{background:var(--accent);color:var(--ink)}
+
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:0}
+
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:12px 16px;font-family:var(--display);letter-spacing:.05em;text-transform:uppercase;z-index:9999}
+.skip:focus{left:8px;top:8px}
+
+.container{width:100%;max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+
+/* ====== NAVBAR ====== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:#fff;
+  border-bottom:1px solid var(--ink);
+  height:var(--nav-h);
+  transition:box-shadow .25s ease, height .25s ease;
+}
+.nav.scrolled{box-shadow:0 6px 24px rgba(20,20,27,.08)}
+.nav__inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:100%;
+  max-width:var(--max);margin:0 auto;
+  padding:0 var(--gut);
+}
+.brand{
+  font-family:var(--display);font-weight:700;
+  font-size:22px;letter-spacing:.04em;text-transform:uppercase;
+  display:inline-flex;align-items:baseline;gap:6px;
+}
+.brand__dot{width:10px;height:10px;background:var(--accent);display:inline-block;transform:translateY(-2px)}
+.nav__links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav__links a{
+  font-family:var(--display);font-weight:600;
+  font-size:14px;letter-spacing:.08em;text-transform:uppercase;
+  position:relative;padding:6px 2px;
+}
+.nav__links a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--accent);
+  transition:right .25s ease;
+}
+.nav__links a:hover::after,.nav__links a:focus-visible::after{right:0}
+.nav__cta{
+  background:var(--accent);color:var(--ink);
+  padding:10px 18px;
+  font-family:var(--display);font-weight:700;
+  font-size:14px;letter-spacing:.08em;text-transform:uppercase;
+  border:2px solid var(--ink);
+  transition:transform .15s ease, box-shadow .15s ease;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.nav__cta:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.burger{
+  display:none;width:44px;height:44px;
+  align-items:center;justify-content:center;
+  border:2px solid var(--ink);background:#fff;
+}
+.burger span{display:block;width:20px;height:2px;background:var(--ink);position:relative;transition:.2s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--ink);transition:.2s}
+.burger span::before{top:-6px}
+.burger span::after{top:6px}
+body.nav-open .burger span{background:transparent}
+body.nav-open .burger span::before{top:0;transform:rotate(45deg)}
+body.nav-open .burger span::after{top:0;transform:rotate(-45deg)}
+
+@media (max-width:840px){
+  .nav__links,.nav__cta{display:none}
+  .burger{display:inline-flex}
+  body.nav-open .nav__panel{display:flex}
+}
+.nav__panel{
+  display:none;
+  position:fixed;inset:var(--nav-h) 0 0 0;
+  background:#fff;
+  flex-direction:column;
+  padding:32px var(--gut);gap:8px;
+  border-top:1px solid var(--ink);
+  z-index:99;
+}
+.nav__panel a{
+  font-family:var(--display);font-weight:700;
+  font-size:28px;letter-spacing:.03em;text-transform:uppercase;
+  padding:14px 0;border-bottom:1px solid #e7e5dd;
+}
+.nav__panel .nav__cta{display:inline-flex;margin-top:16px;align-self:flex-start}
+
+/* ====== SECTION SHELL ====== */
+main{padding-top:var(--nav-h)}
+section{padding:clamp(72px, 10vw, 128px) 0;position:relative}
+.section--surface{background:var(--surface)}
+.section--ink{background:var(--ink);color:#fff}
+
+.section__head{margin-bottom:48px;max-width:760px}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:16px;
+}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--accent);display:inline-block}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.04;letter-spacing:-.005em;text-transform:uppercase}
+h2{
+  font-size:clamp(34px, 5.4vw, 64px);
+  padding-bottom:18px;
+  border-bottom:4px solid var(--ink);
+  display:inline-block;
+}
+.section--ink h2{border-bottom-color:var(--accent)}
+p{font-family:var(--body);font-size:clamp(15px,1.05vw,17px);line-height:1.65;color:var(--ink)}
+.section--ink p{color:#d6d6dc}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease, transform .7s ease}
+.reveal.is-visible{opacity:1;transform:none}
+
+/* ====== HERO ====== */
+.hero{
+  padding-top:clamp(56px, 8vw, 104px);
+  padding-bottom:clamp(72px, 10vw, 128px);
+  position:relative;
+  background:
+    radial-gradient(circle at 20% 0%, #fffbe9 0%, transparent 50%),
+    #fff;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity:.7;mix-blend-mode:multiply;
+}
+.hero__grid{
+  display:grid;grid-template-columns:1fr;gap:48px;
+  align-items:center;position:relative;z-index:1;
+}
+@media (min-width:960px){
+  .hero__grid{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:72px}
+}
+.hero__eyebrow{margin-bottom:24px}
+.hero h1{
+  font-size:clamp(44px, 7.5vw, 96px);
+  line-height:.96;
+  margin-bottom:24px;
+}
+.hero h1 .mark{
+  background:var(--accent);
+  color:var(--ink);
+  padding:0 .15em;
+  display:inline-block;
+  transform:rotate(-1.5deg);
+  box-shadow:4px 4px 0 var(--ink);
+  margin-right:.1em;
+}
+.hero__sub{
+  font-size:clamp(16px,1.4vw,19px);
+  max-width:54ch;color:#3a3a44;
+  margin-bottom:36px;
+}
+.hero__ctas{display:flex;flex-wrap:wrap;gap:14px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--display);font-weight:700;
+  font-size:15px;letter-spacing:.08em;text-transform:uppercase;
+  padding:16px 22px;
+  border:2px solid var(--ink);
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  min-height:48px;
+  white-space:nowrap;
+}
+.btn--primary{background:var(--accent);color:var(--ink)}
+.btn--primary:hover,.btn--primary:focus-visible{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
+.btn--ghost{background:#fff;color:var(--ink)}
+.btn--ghost:hover,.btn--ghost:focus-visible{background:var(--ink);color:#fff;transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--accent)}
+.btn--lg{padding:20px 28px;font-size:16px}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
+.btn--primary svg{stroke:var(--ink)}
+
+/* hero collage */
+.hero__art{
+  position:relative;aspect-ratio:1/1;width:100%;max-width:480px;margin:0 auto;
+  display:none;
+}
+@media (min-width:960px){.hero__art{display:block}}
+.hero__art .blk{position:absolute;border:2px solid var(--ink)}
+.hero__art .blk--yellow{
+  inset:8% 18% auto auto;width:62%;aspect-ratio:1/1;background:var(--accent);
+  box-shadow:10px 10px 0 var(--ink);
+}
+.hero__art .blk--ink{
+  bottom:6%;left:4%;width:46%;aspect-ratio:1.3/1;background:var(--ink);
+  box-shadow:-8px 8px 0 var(--accent);
+}
+.hero__art .blk--white{
+  top:42%;left:34%;width:30%;aspect-ratio:1/1;background:#fff;
+  z-index:2;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero__art .blk--white svg{width:60%;height:60%;stroke:var(--ink);fill:none;stroke-width:1.6}
+.hero__art .vlabel{
+  position:absolute;right:-2px;top:18%;
+  font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--ink);
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  background:#fff;padding:10px 6px;border:1px solid var(--ink);
+  z-index:3;
+}
+.hero__art .stripe{
+  position:absolute;left:-10%;bottom:32%;width:120%;height:3px;background:var(--ink);
+  transform:rotate(-12deg);z-index:0;
+}
+
+/* ====== NOSOTROS ====== */
+.about__body{display:grid;grid-template-columns:1fr;gap:36px;align-items:start}
+@media (min-width:960px){.about__body{grid-template-columns:1.2fr 1fr;gap:80px}}
+.about__lead{font-size:clamp(18px,1.6vw,22px);line-height:1.55;color:var(--ink);font-weight:500;margin-bottom:20px}
+.about__copy p + p{margin-top:14px}
+.stats{
+  display:grid;grid-template-columns:1fr;gap:0;
+  border:2px solid var(--ink);background:#fff;
+}
+.stat{
+  padding:22px 24px;
+  border-bottom:1px solid var(--ink);
+  display:flex;align-items:baseline;gap:14px;
+}
+.stat:last-child{border-bottom:0}
+.stat__num{font-family:var(--display);font-size:28px;color:var(--accent-deep);font-weight:700;letter-spacing:.02em}
+.stat__label{font-family:var(--display);font-size:18px;text-transform:uppercase;letter-spacing:.04em}
+
+/* ====== MARCAS ====== */
+.brands{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap:18px;
+  margin-top:8px;
+}
+.brand-card{
+  background:#fff;
+  border:2px solid var(--ink);
+  padding:26px 24px 28px;
+  transition:transform .2s ease, box-shadow .2s ease;
+  position:relative;
+}
+.brand-card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--accent)}
+.brand-card__name{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(22px,2vw,28px);text-transform:uppercase;letter-spacing:.02em;
+  line-height:1.05;margin-bottom:10px;
+}
+.brand-card__desc{font-size:14.5px;color:var(--muted);line-height:1.55}
+.brand-card__num{
+  position:absolute;top:14px;right:16px;
+  font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.2em;
+}
+
+/* ====== CATÁLOGO ====== */
+.catalog{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap:18px;
+}
+.cat-card{
+  border:2px solid var(--ink);
+  background:#fff;
+  padding:24px 22px 26px;
+  display:flex;flex-direction:column;gap:14px;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.cat-card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--accent)}
+.cat-icon{
+  width:56px;height:56px;background:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--ink);
+  box-shadow:4px 4px 0 var(--ink);
+}
+.cat-icon svg{width:30px;height:30px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cat-card__title{
+  font-family:var(--display);font-weight:700;
+  font-size:22px;text-transform:uppercase;letter-spacing:.02em;
+}
+.cat-card__desc{font-size:14.5px;color:var(--muted);line-height:1.55}
+
+/* ====== CONTACTO ====== */
+.contact__grid{
+  display:grid;grid-template-columns:1fr;gap:36px;align-items:start;
+}
+@media (min-width:960px){.contact__grid{grid-template-columns:1fr 1.1fr;gap:64px}}
+.info{display:flex;flex-direction:column;gap:18px}
+.info__row{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:18px 20px;border:2px solid var(--ink);background:#fff;
+}
+.info__icon{
+  width:40px;height:40px;flex:0 0 40px;
+  background:var(--accent);border:1.5px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+}
+.info__icon svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.info__label{
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:4px;
+}
+.info__value{font-family:var(--display);font-size:20px;text-transform:uppercase;letter-spacing:.02em;line-height:1.2;display:block}
+.info__value a{border-bottom:2px solid var(--accent)}
+.info__sub{display:block;margin-top:4px;font-family:var(--body);font-size:14px;color:var(--muted);text-transform:none;letter-spacing:0}
+.contact__cta{margin-top:6px}
+.map{
+  border:2px solid var(--ink);
+  box-shadow:8px 8px 0 var(--ink);
+  position:relative;
+  aspect-ratio:4/3;
+  background:#e9e7df;
+}
+.map iframe{width:100%;height:100%;border:0;display:block}
+
+/* ====== FOOTER ====== */
+footer{background:var(--ink);color:#d6d6dc;padding:64px 0 28px}
+.footer__grid{
+  display:grid;grid-template-columns:1fr;gap:32px;
+  padding-bottom:36px;border-bottom:1px solid #2a2a36;
+}
+@media (min-width:780px){.footer__grid{grid-template-columns:1.4fr 1fr 1fr}}
+.footer__brand{font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;margin-bottom:10px;display:inline-flex;gap:6px;align-items:baseline}
+.footer__tag{font-size:14.5px;color:#a4a4ae;line-height:1.55;max-width:36ch}
+.footer__h{font-family:var(--display);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#fff;margin-bottom:12px}
+footer p{color:#d6d6dc;font-size:14.5px;line-height:1.7}
+footer a{border-bottom:1px solid transparent;transition:border-color .15s}
+footer a:hover{border-color:var(--accent)}
+.footer__bottom{
+  padding-top:22px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:#7a7a85;text-transform:uppercase;
+}
+
+/* helpers */
+.no-wrap{white-space:nowrap}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+</style>
+</head>
+<body>
+
+<a class="skip" href="#inicio">Saltar al contenido</a>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#inicio" class="brand" aria-label="Pinturas BS — Inicio">
+      Pinturas BS<span class="brand__dot" aria-hidden="true"></span>
+    </a>
+    <nav aria-label="Principal">
+      <ul class="nav__links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#marcas">Marcas</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+    <a class="nav__cta" href="https://wa.me/56412467387" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.6 7.7L3 21l1.4-4.2A9 9 0 1 1 21 12z"/><path d="M8.5 9.5c.5 2 2 3.5 4 4 .8.2 1.5-.3 1.8-1l.4-1 2.3.9-.4 1.2A3.4 3.4 0 0 1 13 16c-3 0-6-3-6-6 0-.8.4-1.7 1-2.2l1.2-.4.9 2.3-1 .4c-.6.3-.8.8-.6 1.4z"/></svg>
+      WhatsApp
+    </a>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navPanel">
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="nav__panel" id="navPanel">
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#marcas">Marcas</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#contacto">Contacto</a>
+    <a class="nav__cta" href="https://wa.me/56412467387" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ===== HERO ===== -->
+<section id="inicio" class="hero" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="reveal">
+      <div class="eyebrow hero__eyebrow">01 / Concepción — Biobío</div>
+      <h1 id="hero-title">
+        <span class="mark">Pintura</span>, herramientas y asesoría a la altura del oficio
+      </h1>
+      <p class="hero__sub">
+        Stock completo de las marcas que los maestros pintores de Concepción piden por nombre.
+        Atención presencial en Av. Los Carrera 1170 A — a pasos del centro.
+      </p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary btn--lg" href="tel:+56412467387">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg>
+          Llámanos (41) 246 7387
+        </a>
+        <a class="btn btn--ghost btn--lg" href="https://wa.me/56412467387" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.6 7.7L3 21l1.4-4.2A9 9 0 1 1 21 12z"/><path d="M8.5 9.5c.5 2 2 3.5 4 4 .8.2 1.5-.3 1.8-1l.4-1 2.3.9-.4 1.2A3.4 3.4 0 0 1 13 16c-3 0-6-3-6-6 0-.8.4-1.7 1-2.2l1.2-.4.9 2.3-1 .4c-.6.3-.8.8-.6 1.4z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="hero__art reveal" aria-hidden="true">
+      <div class="stripe"></div>
+      <div class="blk blk--yellow"></div>
+      <div class="blk blk--ink"></div>
+      <div class="blk blk--white">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V11l8-7 8 7v10"/><path d="M9 21v-6h6v6"/></svg>
+      </div>
+      <div class="vlabel">Est. Concepción · Biobío</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NOSOTROS ===== -->
+<section id="nosotros" class="section--surface" aria-labelledby="nosotros-title">
+  <div class="container">
+    <div class="section__head reveal">
+      <div class="eyebrow">02 — Quiénes somos</div>
+      <h2 id="nosotros-title">Una pinturería, no un catálogo</h2>
+    </div>
+    <div class="about__body">
+      <div class="about__copy reveal">
+        <p class="about__lead">
+          Somos una pinturería independiente en Concepción que trabaja con stock real en góndola — no con catálogo de pedido.
+          Cuando entras, lo encuentras.
+        </p>
+        <p>
+          Atendemos a vecinos que están pintando su casa, a maestros pintores que conocen las marcas
+          y a constructoras que necesitan abastecer una obra. Para cada uno, la conversación es distinta —
+          y eso es justamente lo que hacemos en mostrador.
+        </p>
+        <p>
+          Trabajamos con las siete marcas que mejor responden en el clima del Biobío:
+          desde látex de pared y barnices para madera hasta esmaltes industriales e impermeabilizantes para techumbre.
+          Si dudas qué llevarte, lo conversamos.
+        </p>
+      </div>
+      <div class="stats reveal" aria-label="Compromisos del local">
+        <div class="stat"><span class="stat__num">→</span><span class="stat__label">Stock inmediato</span></div>
+        <div class="stat"><span class="stat__num">×7</span><span class="stat__label">Marcas líderes</span></div>
+        <div class="stat"><span class="stat__num">●</span><span class="stat__label">Atención presencial</span></div>
+        <div class="stat"><span class="stat__num">★</span><span class="stat__label">Asesoría real</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MARCAS ===== -->
+<section id="marcas" aria-labelledby="marcas-title">
+  <div class="container">
+    <div class="section__head reveal">
+      <div class="eyebrow">03 — Marcas que trabajamos</div>
+      <h2 id="marcas-title">Siete nombres de confianza</h2>
+    </div>
+    <div class="brands">
+      <article class="brand-card reveal">
+        <span class="brand-card__num">01</span>
+        <h3 class="brand-card__name">Sherwin Williams</h3>
+        <p class="brand-card__desc">Líder global en pinturas arquitectónicas e industriales.</p>
+      </article>
+      <article class="brand-card reveal">
+        <span class="brand-card__num">02</span>
+        <h3 class="brand-card__name">Soquina</h3>
+        <p class="brand-card__desc">Fabricante chileno con amplia gama de látex y esmaltes.</p>
+      </article>
+      <article class="brand-card reveal">
+        <span class="brand-card__num">03</span>
+        <h3 class="brand-card__name">Ceresita</h3>
+        <p class="brand-card__desc">Tradición chilena en pinturas para muros interiores y exteriores.</p>
+      </article>
+      <article class="brand-card reveal">
+        <span class="brand-card__num">04</span>
+        <h3 class="brand-card__name">Renner Sayerlack</h3>
+        <p class="brand-card__desc">Especialistas en barnices y acabados profesionales para madera.</p>
+      </article>
+      <article class="brand-card reveal">
+        <span class="brand-card__num">05</span>
+        <h3 class="brand-card__name">Hela</h3>
+        <p class="brand-card__desc">Esmaltes y revestimientos para usos industriales y domésticos.</p>
+      </article>
+      <article class="brand-card reveal">
+        <span class="brand-card__num">06</span>
+        <h3 class="brand-card__name">Nexxo</h3>
+        <p class="brand-card__desc">Línea profesional de látex y esmaltes al agua.</p>
+      </article>
+      <article class="brand-card reveal">
+        <span class="brand-card__num">07</span>
+        <h3 class="brand-card__name">Passol</h3>
+        <p class="brand-card__desc">Impermeabilizantes y soluciones para techumbres y muros.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATÁLOGO ===== -->
+<section id="catalogo" class="section--surface" aria-labelledby="catalogo-title">
+  <div class="container">
+    <div class="section__head reveal">
+      <div class="eyebrow">04 — Qué encuentras en tienda</div>
+      <h2 id="catalogo-title">Catálogo de la pinturería</h2>
+    </div>
+    <div class="catalog">
+
+      <article class="cat-card reveal">
+        <div class="cat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="14" rx="1"/><path d="M4 9h16"/><path d="M9 3h6v3H9z"/></svg>
+        </div>
+        <h3 class="cat-card__title">Látex</h3>
+        <p class="cat-card__desc">Para muros interiores y exteriores, base agua.</p>
+      </article>
+
+      <article class="cat-card reveal">
+        <div class="cat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M14 3l7 7-4 4-7-7z"/><path d="M10 7l-7 7c-1 1-1 3 0 4s3 1 4 0l7-7"/><path d="M5 19l-2 2"/></svg>
+        </div>
+        <h3 class="cat-card__title">Esmalte</h3>
+        <p class="cat-card__desc">Sintético y al agua, para maderas y metales.</p>
+      </article>
+
+      <article class="cat-card reveal">
+        <div class="cat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 9h18"/><path d="M3 13h18"/><path d="M3 17h18"/></svg>
+        </div>
+        <h3 class="cat-card__title">Barniz</h3>
+        <p class="cat-card__desc">Acabados transparentes para madera y pisos.</p>
+      </article>
+
+      <article class="cat-card reveal">
+        <div class="cat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3s7 7.5 7 12a7 7 0 0 1-14 0c0-4.5 7-12 7-12z"/><path d="M9 14a3 3 0 0 0 3 3"/></svg>
+        </div>
+        <h3 class="cat-card__title">Impermeabilizante</h3>
+        <p class="cat-card__desc">Techumbres, muros y zonas húmedas.</p>
+      </article>
+
+      <article class="cat-card reveal">
+        <div class="cat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3 class="cat-card__title">Pinturas especiales</h3>
+        <p class="cat-card__desc">Anticorrosivos, epóxicos y de tráfico.</p>
+      </article>
+
+      <article class="cat-card reveal">
+        <div class="cat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="14" height="4" rx="1"/><path d="M5 8v3h7v3H8v6"/><path d="M17 14l4 4"/><path d="M19 12l3 3"/></svg>
+        </div>
+        <h3 class="cat-card__title">Accesorios y herramientas</h3>
+        <p class="cat-card__desc">Brochas, rodillos, lijas, cintas, espátulas.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACTO ===== -->
+<section id="contacto" aria-labelledby="contacto-title">
+  <div class="container">
+    <div class="section__head reveal">
+      <div class="eyebrow">05 — Visítanos</div>
+      <h2 id="contacto-title">Estamos en Av. Los Carrera</h2>
+    </div>
+    <div class="contact__grid">
+      <div class="info reveal">
+        <div class="info__row">
+          <div class="info__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <span class="info__label">Dirección</span>
+            <span class="info__value">Av. Los Carrera 1170 A</span>
+            <span class="info__sub">Concepción · Región del Biobío · Chile</span>
+          </div>
+        </div>
+        <div class="info__row">
+          <div class="info__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg>
+          </div>
+          <div>
+            <span class="info__label">Teléfono</span>
+            <span class="info__value"><a href="tel:+56412467387">(41) 246 7387</a></span>
+            <span class="info__sub">Toca para llamar</span>
+          </div>
+        </div>
+        <div class="info__row">
+          <div class="info__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <div>
+            <span class="info__label">Horario</span>
+            <span class="info__value">Lun a Sáb · 9:00 – 18:00</span>
+            <span class="info__sub">Domingo cerrado</span>
+          </div>
+        </div>
+        <a class="btn btn--primary btn--lg contact__cta" href="https://wa.me/56412467387" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.6 7.7L3 21l1.4-4.2A9 9 0 1 1 21 12z"/><path d="M8.5 9.5c.5 2 2 3.5 4 4 .8.2 1.5-.3 1.8-1l.4-1 2.3.9-.4 1.2A3.4 3.4 0 0 1 13 16c-3 0-6-3-6-6 0-.8.4-1.7 1-2.2l1.2-.4.9 2.3-1 .4c-.6.3-.8.8-.6 1.4z"/></svg>
+          Escríbenos por WhatsApp
+        </a>
+      </div>
+      <div class="map reveal">
+        <iframe
+          title="Mapa de Pinturas BS Spa en Av. Los Carrera 1170 A, Concepción, Chile"
+          src="https://www.google.com/maps?q=Av.+Los+Carrera+1170+A,+Concepci%C3%B3n,+Chile&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer aria-label="Pie de página">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">Pinturas BS<span class="brand__dot" aria-hidden="true"></span></div>
+        <p class="footer__tag">Pinturería en Concepción con stock real, asesoría en mostrador y las marcas que el oficio pide por nombre.</p>
+      </div>
+      <div>
+        <div class="footer__h">Visítanos</div>
+        <p>Av. Los Carrera 1170 A<br/>Concepción, Biobío</p>
+        <p style="margin-top:8px"><a href="tel:+56412467387">(41) 246 7387</a></p>
+      </div>
+      <div>
+        <div class="footer__h">Horario</div>
+        <p>Lunes a Sábado<br/>9:00 – 18:00</p>
+        <p style="margin-top:8px"><a href="https://wa.me/56412467387" target="_blank" rel="noopener">WhatsApp directo</a></p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2025 Pinturas BS Spa</span>
+      <span>Av. Los Carrera 1170 A, Concepción</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const targets = document.querySelectorAll('.reveal');
+  if (reduced || !('IntersectionObserver' in window)) {
+    targets.forEach(el => el.classList.add('is-visible'));
+  } else {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(el => io.observe(el));
+  }
+
+  const nav = document.getElementById('nav');
+  let lastY = -1;
+  const onScroll = () => {
+    const y = window.scrollY;
+    if (y === lastY) return;
+    lastY = y;
+    nav.classList.toggle('scrolled', y > 40);
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const burger = document.getElementById('burger');
+  const panel = document.getElementById('navPanel');
+  const closeMenu = () => {
+    document.body.classList.remove('nav-open');
+    burger.setAttribute('aria-expanded', 'false');
+  };
+  burger.addEventListener('click', () => {
+    const open = document.body.classList.toggle('nav-open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  panel.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') closeMenu();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      const navH = nav.offsetHeight;
+      const top = target.getBoundingClientRect().top + window.scrollY - navH + 1;
+      window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
+      closeMenu();
+      history.pushState(null, '', id);
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
