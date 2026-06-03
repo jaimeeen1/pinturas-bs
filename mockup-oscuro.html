@@ -162,21 +162,25 @@
     }
     .hero__bg {
       position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?auto=format&fit=crop&w=1600&q=80');
+      background-image: url('https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1600&q=80');
       background-size: cover; background-position: center;
+      filter: grayscale(.3) contrast(1.05);
       transform: scale(1.06);
       transition: transform 7s ease;
     }
     .hero.is-loaded .hero__bg { transform: scale(1); }
     .hero__overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(8,8,15,.93) 0%,
-        rgba(30,36,114,.72) 45%,
-        rgba(8,8,15,.88) 100%
-      );
+      background: linear-gradient(115deg,
+        rgba(30,36,114,.88) 0%,
+        rgba(8,8,15,.82) 55%,
+        rgba(0,212,255,.30) 100%);
     }
+    .hero__swatches {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 9px;
+      display: flex; z-index: 4;
+    }
+    .hero__swatches i { flex: 1; }
     .hero__noise {
       position: absolute; inset: 0; pointer-events: none; opacity: .03;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
@@ -259,69 +263,58 @@
       padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 3rem);
     }
     .productos__header {
-      max-width: 1200px; margin: 0 auto 3.5rem;
+      max-width: 1200px; margin: 0 auto 2rem;
       display: flex; align-items: flex-end; justify-content: space-between;
       gap: 1.5rem; flex-wrap: wrap;
     }
+    .productos__filtros {
+      max-width: 1200px; margin: 0 auto 2rem;
+      display: flex; gap: .5rem; flex-wrap: wrap;
+    }
+    .filtro {
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: .85rem;
+      padding: .5rem 1.1rem; border-radius: 100px;
+      background: var(--surface); border: 1px solid var(--rule); color: var(--muted);
+      transition: color .2s, border-color .2s, background .2s; min-height: 40px;
+    }
+    .filtro:hover { color: var(--text); border-color: var(--accent); }
+    .filtro.is-active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
     .productos__grid {
       max-width: 1200px; margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+      gap: 1rem;
     }
-    .prod-card {
-      background: var(--surface);
-      border: 1px solid var(--rule); border-radius: var(--radius);
-      padding: 1.75rem 1.5rem;
-      position: relative; overflow: hidden;
-      transition: border-color .25s, transform .2s, box-shadow .25s;
+    .p-item {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius);
+      padding: 1.1rem 1.2rem; position: relative; overflow: hidden;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
     }
-    .prod-card::before {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 3px;
-      background: var(--card-accent, var(--accent));
-      border-radius: var(--radius) var(--radius) 0 0;
+    .p-item::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--c, var(--accent));
     }
-    .prod-card:hover {
-      border-color: var(--card-accent, var(--accent));
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,.4);
-    }
-    .prod-card__icon {
-      width: 48px; height: 48px; border-radius: 10px;
-      background: rgba(255,255,255,.06);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.25rem;
-    }
-    .prod-card__icon svg { width: 26px; height: 26px; }
-    .prod-card__title {
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem;
-      margin-bottom: .5rem; color: var(--text);
-    }
-    .prod-card__desc { font-size: .9rem; color: var(--muted); line-height: 1.55; }
-    .prod-card__tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
-    .prod-tag {
-      font-size: .72rem; font-family: 'JetBrains Mono', monospace;
-      letter-spacing: .05em; padding: .2rem .6rem; border-radius: 100px;
-      background: rgba(255,255,255,.06); color: var(--muted);
-      border: 1px solid var(--rule);
-    }
-    .prod-card--cta {
+    .p-item:hover { transform: translateY(-3px); border-color: var(--c, var(--accent)); box-shadow: 0 10px 26px rgba(0,0,0,.4); }
+    .p-item.hide { display: none; }
+    .p-item__name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: .5rem; line-height: 1.25; }
+    .p-item__meta { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .p-item__marca { font-size: .7rem; font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; padding: .15rem .55rem; border-radius: 100px; color: var(--c, var(--accent)); border: 1px solid var(--c, var(--accent)); opacity: .85; }
+    .p-item__detalle { font-size: .8rem; color: var(--muted); }
+    .productos__empty { max-width:1200px; margin:0 auto; color:var(--muted); font-size:.9rem; }
+    .productos__cta-row {
+      max-width: 1200px; margin: 2rem auto 0; padding: 1.4rem 1.6rem;
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-bright) 100%);
-      border-color: var(--navy-bright);
-      display: flex; flex-direction: column; justify-content: center;
-      align-items: flex-start; gap: 1rem;
+      border: 1px solid var(--navy-bright); border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
     }
-    .prod-card--cta::before { background: var(--accent); }
-    .prod-card--cta:hover { border-color: var(--accent); }
-    .prod-card--cta .prod-card__title { color: #fff; font-size: 1.2rem; }
-    .prod-card--cta .prod-card__desc { color: rgba(255,255,255,.7); }
+    .productos__cta-row p { font-family: 'Syne', sans-serif; font-weight: 700; color: #fff; font-size: 1.05rem; }
+    .productos__cta-row span { color: rgba(255,255,255,.7); font-weight: 400; font-size: .88rem; display: block; margin-top: .15rem; }
     .btn-cta-small {
       background: var(--accent); color: var(--bg);
-      padding: .6rem 1.25rem; border-radius: 6px;
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem;
+      padding: .7rem 1.4rem; border-radius: 7px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: .92rem;
       display: inline-flex; align-items: center; gap: .4rem;
-      transition: background .2s, transform .15s; min-height: 44px;
+      transition: background .2s, transform .15s; min-height: 44px; white-space: nowrap;
     }
     .btn-cta-small:hover { background: #22e8ff; transform: translateY(-1px); }
 
@@ -400,13 +393,13 @@
       box-shadow: 0 10px 28px rgba(0,0,0,.4);
     }
     .brand-card__top { height: 5px; background: var(--brand-color, var(--accent)); }
-    .brand-card__body { padding: 1.5rem; display: flex; align-items: flex-start; gap: 1rem; }
-    .brand-card__logo-box {
-      width: 56px; height: 56px; flex-shrink: 0;
-      background: rgba(255,255,255,.06); border: 1px solid var(--rule);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    .brand-card__logo {
+      background: #fff; height: 92px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem 1.4rem;
     }
-    .brand-card__logo-box svg { width: 36px; height: 36px; }
+    .brand-card__logo img { max-height: 52px; max-width: 175px; width: auto; object-fit: contain; }
+    .brand-card__body { padding: 1.3rem 1.5rem 1.5rem; }
     .brand-card__name {
       font-family: 'Syne', sans-serif; font-weight: 800;
       font-size: 1rem; color: var(--text); margin-bottom: .3rem; letter-spacing: .02em;
@@ -631,6 +624,10 @@
         </svg>
         Scroll
       </div>
+
+      <div class="hero__swatches" aria-hidden="true">
+        <i style="background:#00d4ff"></i><i style="background:#4fc3f7"></i><i style="background:#f5a623"></i><i style="background:#c49a5a"></i><i style="background:#29b6f6"></i><i style="background:#ab47bc"></i><i style="background:#66bb6a"></i><i style="background:#e63312"></i><i style="background:#c41230"></i>
+      </div>
     </section>
 
     <!-- ══════════════ ② PRODUCTOS ══════════════ -->
@@ -643,123 +640,18 @@
         <p class="section-sub">Todo lo que necesitás para tu proyecto, con stock real disponible.</p>
       </div>
 
-      <div class="productos__grid">
+      <div class="productos__filtros reveal" id="prodFiltros"></div>
 
-        <article class="prod-card reveal" style="--card-accent:#00d4ff">
-          <div class="prod-card__icon">
-            <svg viewBox="0 0 26 26" fill="none" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="6" width="20" height="16" rx="2"/><path d="M8 6V4a2 2 0 014 0v2"/><line x1="13" y1="11" x2="13" y2="17"/><line x1="10" y1="14" x2="16" y2="14"/>
-            </svg>
-          </div>
-          <h3 class="prod-card__title">Látex Interior</h3>
-          <p class="prod-card__desc">Base agua para muros y cielos interiores. Lavable, sin olor, disponible en acabado mate y satinado.</p>
-          <div class="prod-card__tags">
-            <span class="prod-tag">Mate</span>
-            <span class="prod-tag">Satinado</span>
-            <span class="prod-tag">Lavable</span>
-          </div>
-        </article>
+      <div class="productos__grid" id="prodGrid">
+        <p class="productos__empty">Cargando productos…</p>
+      </div>
 
-        <article class="prod-card reveal" style="--card-accent:#4fc3f7">
-          <div class="prod-card__icon">
-            <svg viewBox="0 0 26 26" fill="none" stroke="#4fc3f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 10L13 3l10 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 24 9 13 17 13 17 24"/>
-            </svg>
-          </div>
-          <h3 class="prod-card__title">Látex Exterior</h3>
-          <p class="prod-card__desc">Formulados para resistir lluvia y humedad del sur de Chile. Filtro UV y protección antimanchas.</p>
-          <div class="prod-card__tags">
-            <span class="prod-tag">Resistente lluvia</span>
-            <span class="prod-tag">Anti-UV</span>
-          </div>
-        </article>
-
-        <article class="prod-card reveal" style="--card-accent:#f5a623">
-          <div class="prod-card__icon">
-            <svg viewBox="0 0 26 26" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-            </svg>
-          </div>
-          <h3 class="prod-card__title">Esmaltes</h3>
-          <p class="prod-card__desc">Sintéticos y al agua para maderas y metales. Acabado brillante o satinado de alta durabilidad.</p>
-          <div class="prod-card__tags">
-            <span class="prod-tag">Madera</span>
-            <span class="prod-tag">Metal</span>
-            <span class="prod-tag">Brillante</span>
-          </div>
-        </article>
-
-        <article class="prod-card reveal" style="--card-accent:#c49a5a">
-          <div class="prod-card__icon">
-            <svg viewBox="0 0 26 26" fill="none" stroke="#c49a5a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/><line x1="12" y1="13" x2="12" y2="24"/>
-            </svg>
-          </div>
-          <h3 class="prod-card__title">Barnices &amp; Stains</h3>
-          <p class="prod-card__desc">Acabados transparentes para madera. Resaltan la veta natural, protegen contra humedad y UV.</p>
-          <div class="prod-card__tags">
-            <span class="prod-tag">Transparente</span>
-            <span class="prod-tag">Pisos</span>
-            <span class="prod-tag">Decks</span>
-          </div>
-        </article>
-
-        <article class="prod-card reveal" style="--card-accent:#29b6f6">
-          <div class="prod-card__icon">
-            <svg viewBox="0 0 26 26" fill="none" stroke="#29b6f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M13 2.69l5.66 5.66a8 8 0 11-11.31 0z"/>
-            </svg>
-          </div>
-          <h3 class="prod-card__title">Impermeabilizantes</h3>
-          <p class="prod-card__desc">Para techumbres, muros y zonas húmedas. Sellado elástico con garantía ante filtraciones.</p>
-          <div class="prod-card__tags">
-            <span class="prod-tag">Techumbres</span>
-            <span class="prod-tag">Muros</span>
-            <span class="prod-tag">Baños</span>
-          </div>
-        </article>
-
-        <article class="prod-card reveal" style="--card-accent:#ab47bc">
-          <div class="prod-card__icon">
-            <svg viewBox="0 0 26 26" fill="none" stroke="#ab47bc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M13 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
-          <h3 class="prod-card__title">Pinturas Especiales</h3>
-          <p class="prod-card__desc">Anticorrosivos, epóxicos, de tráfico y revestimientos texturizados para proyectos específicos.</p>
-          <div class="prod-card__tags">
-            <span class="prod-tag">Anticorrosivo</span>
-            <span class="prod-tag">Epóxico</span>
-            <span class="prod-tag">Tráfico</span>
-          </div>
-        </article>
-
-        <article class="prod-card reveal" style="--card-accent:#66bb6a">
-          <div class="prod-card__icon">
-            <svg viewBox="0 0 26 26" fill="none" stroke="#66bb6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
-            </svg>
-          </div>
-          <h3 class="prod-card__title">Accesorios y Herramientas</h3>
-          <p class="prod-card__desc">Brochas, rodillos, lijas, cintas de enmascarar, espátulas, bandejas y todo lo que necesitás para pintar bien.</p>
-          <div class="prod-card__tags">
-            <span class="prod-tag">Brochas</span>
-            <span class="prod-tag">Rodillos</span>
-            <span class="prod-tag">Lijas</span>
-          </div>
-        </article>
-
-        <article class="prod-card prod-card--cta reveal">
-          <div>
-            <h3 class="prod-card__title">¿No encontrás lo que buscás?</h3>
-            <p class="prod-card__desc">Consultanos directamente. Tenemos acceso a un catálogo amplio y te orientamos.</p>
-          </div>
-          <a href="https://wa.me/56412467387" target="_blank" rel="noopener" class="btn-cta-small">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Consultar por WhatsApp
-          </a>
-        </article>
-
+      <div class="productos__cta-row reveal">
+        <p>¿No encontrás lo que buscás?<span>Tenemos acceso a un catálogo amplio — consultanos y te orientamos.</span></p>
+        <a href="https://wa.me/56412467387" target="_blank" rel="noopener" class="btn-cta-small">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Consultar por WhatsApp
+        </a>
       </div>
     </section>
 
@@ -776,7 +668,7 @@
           </div>
           <div class="nosotros__stats">
             <div class="stat-card">
-              <div class="stat-card__num">7</div>
+              <div class="stat-card__num">6</div>
               <div class="stat-card__label">Marcas líderes en stock</div>
             </div>
             <div class="stat-card">
@@ -832,126 +724,67 @@
 
         <article class="brand-card reveal" style="--brand-color:#c41230">
           <div class="brand-card__top" aria-hidden="true"></div>
+          <div class="brand-card__logo"><img src="assets/logos/sherwin-williams.svg" alt="Logo Sherwin Williams" loading="lazy"></div>
           <div class="brand-card__body">
-            <div class="brand-card__logo-box" aria-hidden="true">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect width="36" height="36" rx="6" fill="#c41230" opacity=".15"/>
-                <text x="18" y="25" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#c41230">SW</text>
-              </svg>
-            </div>
-            <div class="brand-card__info">
-              <h3 class="brand-card__name">Sherwin Williams</h3>
-              <p class="brand-card__desc">Líder global en pinturas arquitectónicas e industriales. Alta calidad y cobertura.</p>
-              <span class="brand-card__badge">ARQUITECTÓNICA · INDUSTRIAL</span>
-            </div>
+            <h3 class="brand-card__name">Sherwin Williams</h3>
+            <p class="brand-card__desc">Líder global en pinturas arquitectónicas e industriales. Alta calidad y cobertura.</p>
+            <span class="brand-card__badge">ARQUITECTÓNICA · INDUSTRIAL</span>
           </div>
         </article>
 
         <article class="brand-card reveal" style="--brand-color:#0066cc">
           <div class="brand-card__top" aria-hidden="true"></div>
+          <div class="brand-card__logo"><img src="assets/logos/soquina.png" alt="Logo Soquina" loading="lazy"></div>
           <div class="brand-card__body">
-            <div class="brand-card__logo-box" aria-hidden="true">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect width="36" height="36" rx="6" fill="#0066cc" opacity=".15"/>
-                <text x="18" y="25" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="10" font-weight="900" fill="#0066cc">SOQ</text>
-              </svg>
-            </div>
-            <div class="brand-card__info">
-              <h3 class="brand-card__name">Soquina</h3>
-              <p class="brand-card__desc">Fabricante chileno con amplia gama de látex y esmaltes para uso doméstico y profesional.</p>
-              <span class="brand-card__badge">LÁTEX · ESMALTES</span>
-            </div>
+            <h3 class="brand-card__name">Soquina</h3>
+            <p class="brand-card__desc">Fabricante chileno con amplia gama de látex y esmaltes para uso doméstico y profesional.</p>
+            <span class="brand-card__badge">LÁTEX · ESMALTES</span>
           </div>
         </article>
 
         <article class="brand-card reveal" style="--brand-color:#e63312">
           <div class="brand-card__top" aria-hidden="true"></div>
+          <div class="brand-card__logo"><img src="assets/logos/ceresita.png" alt="Logo Ceresita" loading="lazy"></div>
           <div class="brand-card__body">
-            <div class="brand-card__logo-box" aria-hidden="true">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect width="36" height="36" rx="6" fill="#e63312" opacity=".15"/>
-                <text x="18" y="25" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" font-weight="900" fill="#e63312">CERE</text>
-              </svg>
-            </div>
-            <div class="brand-card__info">
-              <h3 class="brand-card__name">Ceresita</h3>
-              <p class="brand-card__desc">Tradición chilena en pinturas para muros interiores y exteriores. Amplia paleta de colores.</p>
-              <span class="brand-card__badge">INTERIOR · EXTERIOR</span>
-            </div>
+            <h3 class="brand-card__name">Ceresita</h3>
+            <p class="brand-card__desc">Tradición chilena en pinturas para muros interiores y exteriores. Amplia paleta de colores.</p>
+            <span class="brand-card__badge">INTERIOR · EXTERIOR</span>
           </div>
         </article>
 
-        <article class="brand-card reveal" style="--brand-color:#e8a020">
+        <article class="brand-card reveal" style="--brand-color:#0a4ea2">
           <div class="brand-card__top" aria-hidden="true"></div>
+          <div class="brand-card__logo"><img src="assets/logos/renner.png" alt="Logo Renner Sayerlack" loading="lazy"></div>
           <div class="brand-card__body">
-            <div class="brand-card__logo-box" aria-hidden="true">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect width="36" height="36" rx="6" fill="#e8a020" opacity=".15"/>
-                <text x="18" y="25" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" font-weight="900" fill="#c68800">RSL</text>
-              </svg>
-            </div>
-            <div class="brand-card__info">
-              <h3 class="brand-card__name">Renner Sayerlack</h3>
-              <p class="brand-card__desc">Especialistas en barnices y acabados para madera. Excelencia en pisos y mueblería.</p>
-              <span class="brand-card__badge">BARNICES · MADERA</span>
-            </div>
+            <h3 class="brand-card__name">Renner Sayerlack</h3>
+            <p class="brand-card__desc">Especialistas en barnices y acabados para madera. Excelencia en pisos y mueblería.</p>
+            <span class="brand-card__badge">BARNICES · MADERA</span>
           </div>
         </article>
 
-        <article class="brand-card reveal" style="--brand-color:#2e7d32">
+        <article class="brand-card reveal" style="--brand-color:#f5c000">
           <div class="brand-card__top" aria-hidden="true"></div>
+          <div class="brand-card__logo"><img src="assets/logos/hela.png" alt="Logo Hela" loading="lazy"></div>
           <div class="brand-card__body">
-            <div class="brand-card__logo-box" aria-hidden="true">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect width="36" height="36" rx="6" fill="#2e7d32" opacity=".15"/>
-                <text x="18" y="25" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" font-weight="900" fill="#2e7d32">HELA</text>
-              </svg>
-            </div>
-            <div class="brand-card__info">
-              <h3 class="brand-card__name">Hela</h3>
-              <p class="brand-card__desc">Esmaltes y revestimientos para usos industriales y domésticos. Durabilidad probada.</p>
-              <span class="brand-card__badge">ESMALTES · INDUSTRIAL</span>
-            </div>
+            <h3 class="brand-card__name">Hela</h3>
+            <p class="brand-card__desc">Esmaltes y revestimientos para usos industriales y domésticos. Durabilidad probada.</p>
+            <span class="brand-card__badge">ESMALTES · INDUSTRIAL</span>
           </div>
         </article>
 
-        <article class="brand-card reveal" style="--brand-color:#7b1fa2">
+        <article class="brand-card reveal" style="--brand-color:#3aa14b">
           <div class="brand-card__top" aria-hidden="true"></div>
+          <div class="brand-card__logo"><img src="assets/logos/passol.png" alt="Logo Passol" loading="lazy"></div>
           <div class="brand-card__body">
-            <div class="brand-card__logo-box" aria-hidden="true">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect width="36" height="36" rx="6" fill="#7b1fa2" opacity=".15"/>
-                <text x="18" y="25" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" font-weight="900" fill="#7b1fa2">NXO</text>
-              </svg>
-            </div>
-            <div class="brand-card__info">
-              <h3 class="brand-card__name">Nexxo</h3>
-              <p class="brand-card__desc">Línea profesional de látex y esmaltes al agua. Bajo olor, secado rápido y alta cubrición.</p>
-              <span class="brand-card__badge">LÁTEX · AL AGUA</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="brand-card reveal" style="--brand-color:#00838f">
-          <div class="brand-card__top" aria-hidden="true"></div>
-          <div class="brand-card__body">
-            <div class="brand-card__logo-box" aria-hidden="true">
-              <svg viewBox="0 0 36 36" fill="none">
-                <rect width="36" height="36" rx="6" fill="#00838f" opacity=".15"/>
-                <text x="18" y="25" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" font-weight="900" fill="#00838f">PAS</text>
-              </svg>
-            </div>
-            <div class="brand-card__info">
-              <h3 class="brand-card__name">Passol</h3>
-              <p class="brand-card__desc">Impermeabilizantes y soluciones para techumbres y muros. Ideal para el clima del sur.</p>
-              <span class="brand-card__badge">IMPERMEABILIZANTE</span>
-            </div>
+            <h3 class="brand-card__name">Passol</h3>
+            <p class="brand-card__desc">Impermeabilizantes y soluciones para techumbres y muros. Ideal para el clima del sur.</p>
+            <span class="brand-card__badge">IMPERMEABILIZANTE</span>
           </div>
         </article>
 
       </div>
       <p class="marcas__note reveal">
-        Logos oficiales próximamente · ¿Buscas una marca específica?
+        ¿Buscas una marca específica?
         <a href="https://wa.me/56412467387" target="_blank" rel="noopener">Consultanos por WhatsApp</a>
       </p>
     </section>
@@ -1054,7 +887,7 @@
           <li><a href="#marcas">Ceresita</a></li>
           <li><a href="#marcas">Renner Sayerlack</a></li>
           <li><a href="#marcas">Hela</a></li>
-          <li><a href="#marcas">Nexxo · Passol</a></li>
+          <li><a href="#marcas">Passol</a></li>
         </ul>
       </div>
 
@@ -1081,7 +914,48 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 
+  <script src="productos.js"></script>
   <script>
+    // ─── Catálogo dinámico: genera los productos leyendo CATALOGO (productos.js) ─
+    (function renderProductos(){
+      if (typeof CATALOGO === 'undefined') return;
+      const filtros = document.getElementById('prodFiltros');
+      const grid = document.getElementById('prodGrid');
+      if (!filtros || !grid) return;
+
+      function productoCard(p, color, cat){
+        return '<article class="p-item" data-cat="'+cat+'" style="--c:'+color+'">'+
+          '<div class="p-item__name">'+p.nombre+'</div>'+
+          '<div class="p-item__meta">'+
+            '<span class="p-item__marca">'+p.marca+'</span>'+
+            '<span class="p-item__detalle">'+p.detalle+'</span>'+
+          '</div>'+
+        '</article>';
+      }
+
+      // Pestañas de filtro
+      let tabs = '<button class="filtro is-active" data-f="todas">Todas</button>';
+      CATALOGO.forEach((c,i)=> tabs += '<button class="filtro" data-f="'+i+'">'+c.categoria+'</button>');
+      filtros.innerHTML = tabs;
+
+      // Tarjetas de producto
+      let cells = '';
+      CATALOGO.forEach((c,i)=> c.productos.forEach(p=> cells += productoCard(p, c.color, i)));
+      grid.innerHTML = cells || '<p class="productos__empty">Pronto publicaremos el catálogo completo.</p>';
+
+      // Filtrado
+      filtros.querySelectorAll('.filtro').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          filtros.querySelectorAll('.filtro').forEach(b=> b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          const f = btn.dataset.f;
+          grid.querySelectorAll('.p-item').forEach(it=>{
+            it.classList.toggle('hide', f !== 'todas' && it.dataset.cat !== f);
+          });
+        });
+      });
+    })();
+
     // ─── Reveal on scroll ────────────────────────────────────────────────────
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!prefersReduced) {
