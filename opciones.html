@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opciones — Pinturas BS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root{
+      --bg:#08080f; --bg2:#0d0d18; --surface:#111122; --surface2:#161628;
+      --accent:#00d4ff; --navy:#1e2472; --navy-bright:#2a33a0;
+      --green:#25d366; --text:#e8e8f0; --muted:#7878a0;
+      --rule:rgba(255,255,255,.07); --radius:12px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;cursor:pointer;border:none}
+    img{max-width:100%;display:block}
+
+    /* ─── PREVIEW CHROME ─── */
+    .pv-bar{
+      position:sticky; top:0; z-index:500;
+      background:rgba(8,8,15,.92); backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--rule);
+      padding:.7rem clamp(1rem,4vw,2rem);
+      display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+    }
+    .pv-bar strong{font-family:'Syne',sans-serif;font-size:.95rem}
+    .pv-bar .pv-hint{font-size:.78rem;color:var(--muted)}
+    .pv-nav{display:flex;gap:.4rem;flex-wrap:wrap;margin-left:auto}
+    .pv-nav a{
+      font-family:'JetBrains Mono',monospace;font-size:.72rem;
+      padding:.3rem .65rem;border-radius:100px;border:1px solid var(--rule);
+      color:var(--muted);transition:.2s;white-space:nowrap;
+    }
+    .pv-nav a:hover{border-color:var(--accent);color:var(--accent)}
+
+    .opt-label{
+      max-width:1200px;margin:0 auto;
+      padding:2.6rem clamp(1rem,4vw,3rem) .2rem;
+      display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;
+    }
+    .opt-label .tag{
+      font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--bg);background:var(--accent);
+      padding:.25rem .7rem;border-radius:6px;font-weight:600;
+    }
+    .opt-label h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem}
+    .opt-label .sub{font-size:.85rem;color:var(--muted)}
+    .divider{height:1px;background:var(--rule);max-width:1200px;margin:2.5rem auto 0}
+
+    /* ════════ HERO BASE ════════ */
+    .hero{position:relative;min-height:min(78vh,620px);display:flex;align-items:center;overflow:hidden}
+    .hero__content{position:relative;z-index:3;max-width:1200px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem);width:100%}
+    .hero__eyebrow{font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+    .hero__eyebrow::before{content:'';width:32px;height:1px;background:var(--accent)}
+    .hero__title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.08;color:#fff;margin-bottom:1.25rem;max-width:15ch}
+    .hero__title em{font-style:normal;background:linear-gradient(90deg,var(--accent),#7af0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero__sub{font-size:clamp(1rem,1.6vw,1.12rem);color:rgba(232,232,240,.8);line-height:1.7;max-width:44ch;margin-bottom:2rem}
+    .hero__ctas{display:flex;flex-wrap:wrap;gap:1rem}
+    .btn-primary{background:var(--accent);color:var(--bg);padding:.8rem 1.8rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;display:inline-flex;align-items:center;gap:.5rem;transition:.2s}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.35)}
+    .btn-outline{background:transparent;color:var(--text);border:1.5px solid rgba(255,255,255,.3);padding:.8rem 1.8rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;transition:.2s}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+    .btn-wsp-hero{background:var(--green);color:#fff;padding:.8rem 1.8rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;display:inline-flex;align-items:center;gap:.5rem;transition:.2s}
+    .btn-wsp-hero:hover{transform:translateY(-2px)}
+
+    /* ── HERO A: foto + overlay oscuro ── */
+    .heroA{background:#0a0a14}
+    .heroA .bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1604147706283-d7119b5b822c?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center}
+    .heroA .ov{position:absolute;inset:0;background:linear-gradient(105deg,rgba(8,8,15,.94) 0%,rgba(8,8,15,.78) 40%,rgba(30,36,114,.55) 100%)}
+
+    /* ── HERO B: degradado abstracto (sin foto) ── */
+    .heroB{background:
+        radial-gradient(60% 80% at 12% 20%, rgba(0,212,255,.22), transparent 60%),
+        radial-gradient(50% 70% at 88% 30%, rgba(123,31,162,.28), transparent 60%),
+        radial-gradient(70% 90% at 70% 95%, rgba(30,36,114,.55), transparent 60%),
+        linear-gradient(160deg,#0a0a16,#08080f);}
+    .heroB .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:float 14s ease-in-out infinite}
+    .heroB .blob1{width:380px;height:380px;background:#00d4ff;top:-80px;left:-60px}
+    .heroB .blob2{width:320px;height:320px;background:#7b1fa2;bottom:-100px;right:-40px;animation-delay:-5s}
+    .heroB .grid-lines{position:absolute;inset:0;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:54px 54px;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 30%,transparent 75%);mask-image:radial-gradient(circle at 50% 50%,#000 30%,transparent 75%);opacity:.5}
+    @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-24px)}}
+
+    /* ── HERO C: foto duotono + franja de muestras ── */
+    .heroC{background:#0a0a14}
+    .heroC .bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center;filter:grayscale(.3) contrast(1.05)}
+    .heroC .ov{position:absolute;inset:0;background:linear-gradient(115deg,rgba(30,36,114,.86),rgba(8,8,15,.82) 55%,rgba(0,212,255,.30))}
+    .heroC .swatches{position:absolute;bottom:0;left:0;right:0;height:8px;display:flex;z-index:4}
+    .heroC .swatches i{flex:1}
+
+    /* ════════ PRODUCT ITEM (compartido) ════════ */
+    .p-item{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1rem 1.1rem;position:relative;overflow:hidden;transition:.2s}
+    .p-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c,var(--accent))}
+    .p-item:hover{transform:translateY(-3px);border-color:var(--c,var(--accent));box-shadow:0 10px 26px rgba(0,0,0,.4)}
+    .p-item__name{font-family:'Syne',sans-serif;font-weight:700;font-size:.98rem;color:var(--text);margin-bottom:.45rem;line-height:1.25}
+    .p-item__meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+    .p-item__marca{font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;padding:.15rem .55rem;border-radius:100px;color:var(--c,var(--accent));border:1px solid var(--c,var(--accent));opacity:.85}
+    .p-item__detalle{font-size:.78rem;color:var(--muted)}
+
+    .wrap{max-width:1200px;margin:0 auto;padding:1.5rem clamp(1rem,4vw,3rem) 1rem}
+
+    /* ── LAYOUT 1: filtro ── */
+    .filtros{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .filtro{font-family:'Syne',sans-serif;font-weight:600;font-size:.82rem;padding:.5rem 1.05rem;border-radius:100px;background:var(--surface);border:1px solid var(--rule);color:var(--muted);transition:.2s}
+    .filtro:hover{color:var(--text);border-color:var(--accent)}
+    .filtro.is-active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+    .l1-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:1rem}
+    .l1-cell.hide{display:none}
+
+    /* ── LAYOUT 2: secciones apiladas ── */
+    .l2-cat{margin-bottom:2.5rem}
+    .l2-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.1rem;padding-bottom:.8rem;border-bottom:2px solid var(--c,var(--accent))}
+    .l2-icon{width:44px;height:44px;flex-shrink:0;border-radius:10px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+    .l2-icon svg{width:24px;height:24px}
+    .l2-head h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--text)}
+    .l2-head p{font-size:.84rem;color:var(--muted)}
+    .l2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:1rem}
+
+    /* ── LAYOUT 3: acordeón ── */
+    .l3-cat{border:1px solid var(--rule);border-radius:var(--radius);margin-bottom:.8rem;overflow:hidden;background:var(--bg2)}
+    .l3-cat.open{border-color:var(--c,var(--accent))}
+    .l3-head{width:100%;display:flex;align-items:center;gap:1rem;padding:1.1rem 1.3rem;background:transparent;color:var(--text);text-align:left}
+    .l3-icon{width:38px;height:38px;flex-shrink:0;border-radius:9px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+    .l3-icon svg{width:22px;height:22px}
+    .l3-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;flex:1}
+    .l3-count{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--c,var(--accent));border:1px solid var(--c,var(--accent));border-radius:100px;padding:.1rem .55rem;opacity:.8}
+    .l3-chev{color:var(--muted);transition:transform .3s;font-size:.9rem}
+    .l3-cat.open .l3-chev{transform:rotate(180deg)}
+    .l3-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+    .l3-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:.8rem;padding:0 1.3rem 1.3rem}
+
+    footer.pv-foot{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--rule);margin-top:2rem}
+    footer.pv-foot code{color:var(--accent);font-family:'JetBrains Mono',monospace}
+  </style>
+</head>
+<body>
+
+  <div class="pv-bar">
+    <strong>🎨 Opciones — Pinturas BS</strong>
+    <span class="pv-hint">Elige <b>1 hero</b> + <b>1 vista de productos</b> y dime los números (ej: “Hero 2 + Productos 1”).</span>
+    <nav class="pv-nav">
+      <a href="#heroA">Hero 1</a><a href="#heroB">Hero 2</a><a href="#heroC">Hero 3</a>
+      <a href="#prod1">Prod 1</a><a href="#prod2">Prod 2</a><a href="#prod3">Prod 3</a>
+    </nav>
+  </div>
+
+  <!-- ════════════ HERO 1 ════════════ -->
+  <div class="opt-label"><span class="tag">Hero 1</span><h2>Foto de pintura + overlay oscuro</h2><span class="sub">potente, fotográfico</span></div>
+  <section class="hero heroA" id="heroA">
+    <div class="bg"></div><div class="ov"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Concepción — Biobío</p>
+      <h1 class="hero__title">Tu pinturería de <em>confianza</em></h1>
+      <p class="hero__sub">Stock inmediato de las marcas que los maestros piden por nombre. A pasos del centro en Av. Los Carrera 1170 A.</p>
+      <div class="hero__ctas">
+        <a class="btn-primary">Llámanos (41) 246 7387</a>
+        <a class="btn-wsp-hero">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ HERO 2 ════════════ -->
+  <div class="opt-label"><span class="tag">Hero 2</span><h2>Degradado abstracto de color</h2><span class="sub">sin foto · liviano · 100% propio</span></div>
+  <section class="hero heroB" id="heroB">
+    <div class="blob blob1"></div><div class="blob blob2"></div><div class="grid-lines"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Concepción — Biobío</p>
+      <h1 class="hero__title">Color, stock y <em>asesoría</em> real</h1>
+      <p class="hero__sub">Látex, esmaltes, barnices, impermeabilizantes y accesorios de las mejores marcas. Te orientamos según tu proyecto.</p>
+      <div class="hero__ctas">
+        <a class="btn-primary">Llámanos (41) 246 7387</a>
+        <a class="btn-wsp-hero">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ HERO 3 ════════════ -->
+  <div class="opt-label"><span class="tag">Hero 3</span><h2>Foto duotono + franja de muestras</h2><span class="sub">editorial · con tira de colores</span></div>
+  <section class="hero heroC" id="heroC">
+    <div class="bg"></div><div class="ov"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Concepción — Biobío</p>
+      <h1 class="hero__title">Pintura para cada <em>proyecto</em></h1>
+      <p class="hero__sub">Desde la casa hasta la obra. Marcas líderes, stock real y atención presencial en el corazón de Concepción.</p>
+      <div class="hero__ctas">
+        <a class="btn-primary">Llámanos (41) 246 7387</a>
+        <a class="btn-outline">Ver productos</a>
+      </div>
+    </div>
+    <div class="swatches" id="swatches" aria-hidden="true"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ════════════ PRODUCTOS 1 ════════════ -->
+  <div class="opt-label" id="prod1"><span class="tag">Productos 1</span><h2>Filtro por categoría (tipo tienda)</h2><span class="sub">como pinturasonline.cl</span></div>
+  <div class="wrap"><div id="layout1"></div></div>
+
+  <div class="divider"></div>
+
+  <!-- ════════════ PRODUCTOS 2 ════════════ -->
+  <div class="opt-label" id="prod2"><span class="tag">Productos 2</span><h2>Secciones apiladas por categoría</h2><span class="sub">claro y ordenado</span></div>
+  <div class="wrap"><div id="layout2"></div></div>
+
+  <div class="divider"></div>
+
+  <!-- ════════════ PRODUCTOS 3 ════════════ -->
+  <div class="opt-label" id="prod3"><span class="tag">Productos 3</span><h2>Acordeón expandible</h2><span class="sub">compacto · clic para abrir</span></div>
+  <div class="wrap"><div id="layout3"></div></div>
+
+  <footer class="pv-foot">
+    Página de comparación · Pinturas BS Spa · Los datos de productos son de ejemplo (editables en <code>productos.js</code>)<br>
+    Cuando elijas, armo la versión final en <b>mockup-oscuro.html</b>.
+  </footer>
+
+  <script src="productos.js"></script>
+  <script>
+    /* ─── Iconos por categoría ─── */
+    const ICONOS = {
+      "latex-int":  '<rect x="3" y="6" width="20" height="16" rx="2"/><path d="M8 6V4a2 2 0 014 0v2"/><line x1="13" y1="11" x2="13" y2="17"/><line x1="10" y1="14" x2="16" y2="14"/>',
+      "latex-ext":  '<path d="M3 10L13 3l10 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 24 9 13 17 13 17 24"/>',
+      "esmalte":    '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>',
+      "barniz":     '<path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/><line x1="12" y1="13" x2="12" y2="23"/>',
+      "impermeable":'<path d="M13 2.69l5.66 5.66a8 8 0 11-11.31 0z"/>',
+      "especial":   '<path d="M13 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+      "accesorio":  '<path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>'
+    };
+    function iconoSVG(key,color){
+      const inner = ICONOS[key] || ICONOS["especial"];
+      return '<svg viewBox="0 0 26 26" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+inner+'</svg>';
+    }
+    function productoCard(p,color){
+      return '<article class="p-item" style="--c:'+color+'">'+
+        '<div class="p-item__name">'+p.nombre+'</div>'+
+        '<div class="p-item__meta"><span class="p-item__marca">'+p.marca+'</span><span class="p-item__detalle">'+p.detalle+'</span></div>'+
+      '</article>';
+    }
+
+    /* ─── Franja de muestras del Hero 3 (usa los colores del catálogo) ─── */
+    (function(){
+      const sw = document.getElementById('swatches');
+      const cols = CATALOGO.map(c=>c.color).concat(['#e63312','#c41230']);
+      sw.innerHTML = cols.map(c=>'<i style="background:'+c+'"></i>').join('');
+    })();
+
+    /* ─── LAYOUT 1: Filtro por categoría ─── */
+    (function(){
+      const cont = document.getElementById('layout1');
+      let tabs = '<button class="filtro is-active" data-f="todas">Todas</button>';
+      CATALOGO.forEach((c,i)=> tabs += '<button class="filtro" data-f="'+i+'">'+c.categoria+'</button>');
+      let cells = '';
+      CATALOGO.forEach((c,i)=> c.productos.forEach(p=> cells += '<div class="l1-cell" data-cat="'+i+'">'+productoCard(p,c.color)+'</div>'));
+      cont.innerHTML = '<div class="filtros">'+tabs+'</div><div class="l1-grid">'+cells+'</div>';
+      cont.querySelectorAll('.filtro').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          cont.querySelectorAll('.filtro').forEach(b=>b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          const f = btn.dataset.f;
+          cont.querySelectorAll('.l1-cell').forEach(cell=>{
+            cell.classList.toggle('hide', f!=='todas' && cell.dataset.cat!==f);
+          });
+        });
+      });
+    })();
+
+    /* ─── LAYOUT 2: Secciones apiladas ─── */
+    (function(){
+      const cont = document.getElementById('layout2');
+      cont.innerHTML = CATALOGO.map(c=>{
+        const items = c.productos.map(p=>productoCard(p,c.color)).join('');
+        return '<div class="l2-cat">'+
+          '<div class="l2-head" style="--c:'+c.color+'">'+
+            '<div class="l2-icon">'+iconoSVG(c.icono,c.color)+'</div>'+
+            '<div><h3>'+c.categoria+'</h3><p>'+c.descripcion+'</p></div>'+
+          '</div>'+
+          '<div class="l2-grid">'+items+'</div>'+
+        '</div>';
+      }).join('');
+    })();
+
+    /* ─── LAYOUT 3: Acordeón ─── */
+    (function(){
+      const cont = document.getElementById('layout3');
+      cont.innerHTML = CATALOGO.map((c,i)=>{
+        const items = c.productos.map(p=>productoCard(p,c.color)).join('');
+        return '<div class="l3-cat" style="--c:'+c.color+'">'+
+          '<button class="l3-head" aria-expanded="false">'+
+            '<span class="l3-icon">'+iconoSVG(c.icono,c.color)+'</span>'+
+            '<span class="l3-title">'+c.categoria+'</span>'+
+            '<span class="l3-count">'+c.productos.length+'</span>'+
+            '<span class="l3-chev">▾</span>'+
+          '</button>'+
+          '<div class="l3-body"><div class="l3-grid">'+items+'</div></div>'+
+        '</div>';
+      }).join('');
+      cont.querySelectorAll('.l3-head').forEach(head=>{
+        head.addEventListener('click',()=>{
+          const cat = head.parentElement;
+          const body = head.nextElementSibling;
+          const open = cat.classList.toggle('open');
+          head.setAttribute('aria-expanded', String(open));
+          body.style.maxHeight = open ? (body.scrollHeight + 40) + 'px' : '0';
+        });
+      });
+      const first = cont.querySelector('.l3-head');
+      if(first) first.click();
+    })();
+  </script>
+</body>
+</html>
