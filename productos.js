@@ -32,7 +32,7 @@ const CATALOGO = [
     productos: [
       { nombre: "Látex Premium Lavable",      marca: "Soquina",          detalle: "Galón / Tineta · Mate" },
       { nombre: "Látex Interior Mate",        marca: "Ceresita",         detalle: "Galón / Tineta · Mate" },
-      { nombre: "Látex Satinado Lavable",     marca: "Nexxo",            detalle: "Galón · Satinado" },
+      { nombre: "Látex Satinado Lavable",     marca: "Soquina",          detalle: "Galón · Satinado" },
       { nombre: "Óleo al Agua Cielos",        marca: "Sherwin Williams", detalle: "Galón · Mate · Antimanchas" }
     ]
   },
@@ -56,7 +56,7 @@ const CATALOGO = [
     descripcion: "Sintéticos y al agua para maderas y metales. Brillante o satinado.",
     productos: [
       { nombre: "Esmalte Sintético Brillante", marca: "Soquina",  detalle: "1/4 · 1 Gl · Brillante" },
-      { nombre: "Esmalte al Agua",             marca: "Nexxo",    detalle: "1/4 · 1 Gl · Satinado · Bajo olor" },
+      { nombre: "Esmalte al Agua",             marca: "Ceresita", detalle: "1/4 · 1 Gl · Satinado · Bajo olor" },
       { nombre: "Esmalte Industrial",          marca: "Hela",     detalle: "Galón · Alta dureza" },
       { nombre: "Anticorrosivo + Esmalte",     marca: "Hela",     detalle: "Galón · 2 en 1" }
     ]
@@ -104,9 +104,9 @@ const CATALOGO = [
     icono: "accesorio",
     descripcion: "Todo lo necesario para pintar: brochas, rodillos, lijas y más.",
     productos: [
-      { nombre: "Set Rodillo + Bandeja",      marca: "Varios", detalle: "9\" · Lana / Espuma" },
-      { nombre: "Brochas Profesionales",      marca: "Varios", detalle: "1\" a 4\" · Cerda mixta" },
-      { nombre: "Cinta de Enmascarar",        marca: "Varios", detalle: "18 / 24 / 36 mm" },
+      { nombre: "Set Rodillo + Bandeja",      marca: "Nexxo",  detalle: "9\" · Lana / Espuma" },
+      { nombre: "Brochas Profesionales",      marca: "Nexxo",  detalle: "1\" a 4\" · Cerda mixta" },
+      { nombre: "Cinta de Enmascarar",        marca: "Nexxo",  detalle: "18 / 24 / 36 mm" },
       { nombre: "Lijas y Espátulas",          marca: "Varios", detalle: "Grano surtido" }
     ]
   }
